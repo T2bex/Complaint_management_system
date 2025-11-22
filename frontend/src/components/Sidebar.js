@@ -1,28 +1,35 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import {FaHome, FaExclamationCircle, FaHourglassHalf} from 'react-icons/fa';
+import { FaHome, FaExclamationCircle, FaHourglassHalf } from 'react-icons/fa';
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen }) => {
   return (
-    <div className='w-64 bg-green-800 fixed h-full px-4 py-2'>
+    <div className={`fixed top-0 left-0 h-full w-64 bg-green-800 px-4 py-2 transition-transform duration-300
+      ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      
       <div className='my-2 mb-4'>
-        <h1 className='text-2x text-white font-bold'> User dashboard</h1>
+        <h1 className='text-2xl text-white font-bold'>User Dashboard</h1>
       </div>
-      <hr/>
+      <hr />
       <ul className='mt-3 text-white font-bold'>
-        <li className='mb-2 rounded hover:shadow hover: bg-green-500 py-2'>
-          <Link to="/dashboard" className='px-3'><FaHome className='inline-block w-6 h-6 mr-2 -mt-2'/>Home</Link>
+        <li className='mb-2 rounded hover:shadow hover:bg-green-500 py-2'>
+          <Link to="/dashboard" className='px-3 flex items-center'>
+            <FaHome className='w-6 h-6 mr-2' /> Home
+          </Link>
         </li>
-        <li className='mb-2 rounded hover:shadow hover: bg-green-500 py-2'>
-          <Link to="/dashboard" className='px-3'><FaExclamationCircle className='inline-block w-6 h-6 mr-2 -mt-2'/>Register problem</Link>
-          
+        <li className='mb-2 rounded hover:shadow hover:bg-green-500 py-2'>
+          <Link to="/user_complaint" className='px-3 flex items-center'>
+            <FaExclamationCircle className='w-6 h-6 mr-2' /> Register Problem
+          </Link>
         </li>
-        <li className='mb-2 rounded hover:shadow hover: bg-green-500 py-2'>
-          <Link to="/dashboard" className='px-3'><FaHourglassHalf className='inline-block w-6 h-6 mr-2 -mt-2'/>Track problem</Link>
+        <li className='mb-2 rounded hover:shadow hover:bg-green-500 py-2'>
+          <Link to="/problem_tracking" className='px-3 flex items-center'>
+            <FaHourglassHalf className='w-6 h-6 mr-2' /> Track Problem
+          </Link>
         </li>
       </ul>
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar;

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
+import { useLocation } from 'react-router-dom';
 
 export default function ConsumerDashboard() {
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {

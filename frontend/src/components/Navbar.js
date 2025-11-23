@@ -10,7 +10,7 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <nav className='bg-green-800 px-4 py-3 flex justify-between items-center'>
+    <nav className='bg-purple-800 px-4 py-3 flex justify-between items-center'>
       <div className='flex items-center text-xl'>
         <FaBars className='text-white cursor-pointer me-4' onClick={toggleSidebar} />
         <span className='text-white font-semibold'>Complaint System</span>

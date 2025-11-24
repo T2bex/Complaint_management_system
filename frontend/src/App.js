@@ -3,8 +3,10 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import ConsumerDashboard from "./pages/consumer/Dashboard";
 import HDADashboard from "./pages/helpdesk_assistant/Dashboard";
-import Track from "./pages/user_track/Track";
-import Register from "./pages/register_problem/Register";
+import AdminDashboard from "./pages/system_admin/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LogComplaint from "./pages/consumer/LogComplaint";
+import Tracking from "./pages/consumer/Tracking";
 
 
 function App() {
@@ -13,10 +15,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/userdashboard" element={<ConsumerDashboard />} />
-        <Route path="/hdadashboard" element={<HDADashboard />} />
-        <Route path="/user_complaint" element={<Register />} />
-        <Route path="/problem_tracking" element={<Track />} />
+        <Route path="/userdashboard" element={<ProtectedRoute allowedRoles={["consumer"]}>
+          <ConsumerDashboard />
+        </ProtectedRoute>} />
+        <Route path="/help_desk_dashboard" element={<ProtectedRoute allowedRoles={["help_desk_assistant"]}>
+          <HDADashboard />
+        </ProtectedRoute>} />
+        <Route path="/user_complaint" element={<LogComplaint />} />
+        <Route path="/problem_tracking" element={<Tracking />} />
+        <Route path="/admin_dashboard" element={<ProtectedRoute allowedRoles={["admin"]}>
+          <AdminDashboard />
+        </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

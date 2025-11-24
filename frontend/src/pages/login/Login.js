@@ -20,7 +20,15 @@ export default function Login() {
       console.log(result.data);
 
       if (result.data.message === "Login successful") {
-        navigate('/userdashboard');
+        localStorage.setItem("user", JSON.stringify(result.data.user));
+
+        if (result.data.user.role === "consumer") {
+          navigate('/userdashboard');
+        } else if (result.data.user.role === "admin") {
+          navigate('/admin_dashboard');
+        } else if (result.data.user.role === "helpdesk_assistant") {
+          navigate('/help_desk_dashboard');
+        }
       } else {
         alert("Invalid credentials");
       }

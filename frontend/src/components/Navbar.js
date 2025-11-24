@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { FaBars, FaUser, FaBell } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 
+function handleLogout() {
+  localStorage.removeItem("user");
+  window.location.href= "/login";
+}
+
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -30,8 +35,15 @@ const Navbar = ({ toggleSidebar }) => {
           {dropdownOpen && (
             <div className='z-10 absolute rounded-lg shadow w-32 bg-white text-black top-full right-0'>
               <ul>
-                <li><Link to="#" className='px-3 py-1 block hover:bg-gray-200'>Profile</Link></li>
-                <li><Link to="#" className='px-3 py-1 block hover:bg-gray-200'>Logout</Link></li>
+                <li>
+                  <button className='px-3 py-1 block hover:bg-gray-200'>
+                    Profile
+                  </button>
+                </li>
+                <li><button onClick={handleLogout} className='px-3 py-1 block hover:bg-gray-200'>
+                  Logout
+                </button>
+                </li>
               </ul>
             </div>
           )}

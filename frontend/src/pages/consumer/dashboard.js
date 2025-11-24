@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
+import UserDashboardContent from '../../components/UserDashboardContent';
 
 export default function ConsumerDashboard() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  const user = localStorage.getItem("user");
+  if (!user) navigate("/login", { replace: true });
+
+  const handleBack = () => {
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  window.history.pushState(null, "", window.location.href);
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
+
+
+
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -19,10 +41,8 @@ export default function ConsumerDashboard() {
       
       <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
         <Navbar toggleSidebar={toggleSidebar} />
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">Welcome to your Dashboard</h1>
-          <p>Think about your life</p>
-        </div>
+        <UserDashboardContent/>
+        <Footer/>
       </div>
     </div>
   )

@@ -14,16 +14,7 @@ export default function ConsumerDashboard() {
   const user = localStorage.getItem("user");
   if (!user) navigate("/login", { replace: true });
 
-  const handleBack = () => {
-    window.history.pushState(null, "", window.location.href);
-  };
-
-  window.history.pushState(null, "", window.location.href);
-  window.addEventListener("popstate", handleBack);
-
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
+  
 }, []);
 
 
@@ -41,7 +32,9 @@ export default function ConsumerDashboard() {
       
       <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
         <Navbar toggleSidebar={toggleSidebar} />
-        <UserDashboardContent/>
+        <main className='flex-1 overflow-auto'>
+          <UserDashboardContent/>
+        </main>
         <Footer/>
       </div>
     </div>

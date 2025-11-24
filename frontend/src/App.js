@@ -7,14 +7,19 @@ import AdminDashboard from "./pages/system_admin/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LogComplaint from "./pages/consumer/LogComplaint";
 import Tracking from "./pages/consumer/Tracking";
+import PublicRoute from "./context/PublicRoute";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<PublicRoute>
+          <Home />
+        </PublicRoute>} />
+        <Route path="/login" element={<PublicRoute>
+              <Login />
+            </PublicRoute>} />
         <Route path="/userdashboard" element={<ProtectedRoute allowedRoles={["consumer"]}>
           <ConsumerDashboard />
         </ProtectedRoute>} />

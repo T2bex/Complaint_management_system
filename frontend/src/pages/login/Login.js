@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import redirectByRole from "../../context/RedirectByRole";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -9,15 +10,15 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(email, password);
+    
 
     try {
-      const result = await axios.post("http://localhost:8000/login/", {
+      const result = await axios.post("http://localhost:8000/api/login/", {
         email,
         password
       });
 
-      console.log(result.data);
+      
 
       if (result.data.message === "Login successful") {
         localStorage.setItem("user", JSON.stringify(result.data.user));

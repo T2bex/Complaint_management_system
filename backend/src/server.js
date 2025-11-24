@@ -2,8 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import UserModel from '../models/Users.js';
+import Complaint from '../models/Complaint.js';
 
 const app = express();
+const router = express.Router();
 app.use(express.json());
 app.use(cors());
 
@@ -14,7 +16,9 @@ mongoose.connect(mongoURI, {useNewUrlParser: true,useUnifiedTopology: true })
   .catch(err => console.log(err)
 );
 
-app.post('/login/', async (req, res) => {
+app.use("/api",router)
+//Login server
+router.post('/login/', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
@@ -30,6 +34,31 @@ app.post('/login/', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+//consumers input server
+router.post('/complaint', async(req, res) => {
+  try {
+    const {title, description, email} = req.body;
+
+    const consumer = await UserModel.findOne({email, role: 'consumer'});
+    if (!consumer) return res.status(400).json({message: "Consumer not found"});
+
+      //create complaint
+      const newComplaint = new Complaint({
+        title,
+        description,
+        consumer_id: consumer._id,
+        organisations_id: consumer.organisations_id
+      });
+
+      await newComplaint.save();
+      res.json({ message: "Complaint has been logged", complaint: newComplaint});
+
+  } catch (err){
+    console.error(err);
+    res.status(500).json({message:"Server error"})
+  }
+})
 
 
 app.listen(8000, () => {

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import UserModel from '../models/Users.js';
 import Complaint from '../models/Complaint.js';
+import Organisation from '../models/Organisation.js';
 
 const app = express();
 const router = express.Router();
@@ -17,7 +18,7 @@ mongoose.connect(mongoURI, {useNewUrlParser: true,useUnifiedTopology: true })
 );
 
 app.use("/api",router)
-//Login server
+//login server
 router.post('/login/', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -36,7 +37,8 @@ router.post('/login/', async (req, res) => {
 });
 
 //consumers input server
-router.post('/complaint', async(req, res) => {
+router.post('/complaint/', async(req, res) => {
+  // console.log("Received in backend:", req.body);
   try {
     const {title, description, email} = req.body;
 
@@ -57,6 +59,25 @@ router.post('/complaint', async(req, res) => {
   } catch (err){
     console.error(err);
     res.status(500).json({message:"Server error"})
+  }
+})
+
+//calls complaints for logged in consumer
+router.get('/complaints/user/:id', async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const consumer = await UserModel.findOne({_id: id, role: 'consumer'});
+
+    if (!consumer) return res.status(400).json({message: 'Consumer not found'})
+    
+    const complaints = await Complaint.find({consumer_id: id}).populate('organisations_id');
+    
+
+    res.json({complaints});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message: "server error"})
   }
 })
 

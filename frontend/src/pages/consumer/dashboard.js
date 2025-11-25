@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import UserDashboardContent from '../../components/UserDashboardContent';
 
 export default function ConsumerDashboard() {
-  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
 

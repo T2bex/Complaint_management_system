@@ -61,6 +61,23 @@ router.post('/complaint/', async(req, res) => {
     res.status(500).json({message:"Server error"})
   }
 })
+//calls complaint for helpdesk by organisation they are working for
+router.get('/complaints/organisation/:orgId', async (req, res) => {
+  try {
+    const { orgId } = req.params;
+
+    const complaints = await Complaint.find({
+      organisations_id: orgId,
+    }).populate("consumer_id");
+
+    res.json({ complaints });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 //calls complaints for logged in consumer
 router.get('/complaints/user/:id', async (req, res) => {

@@ -8,6 +8,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LogComplaint from "./pages/consumer/LogComplaint";
 import Tracking from "./pages/consumer/Tracking";
 import PublicRoute from "./context/PublicRoute";
+import AssignTask from "./pages/helpdesk_assistant/AssignTask";
+import TrackTask from "./pages/helpdesk_assistant/TrackTask";
 
 
 function App() {
@@ -23,7 +25,7 @@ function App() {
         <Route path="/userdashboard" element={<ProtectedRoute allowedRoles={["consumer"]}>
           <ConsumerDashboard />
         </ProtectedRoute>} />
-        <Route path="/help_desk_dashboard" element={<ProtectedRoute allowedRoles={["help_desk_assistant"]}>
+        <Route path="/help_desk_dashboard" element={<ProtectedRoute allowedRoles={["helpdesk_assistant"]}>
           <HDADashboard />
         </ProtectedRoute>} />
         <Route path="/user_complaint" element={<LogComplaint />} />
@@ -31,6 +33,8 @@ function App() {
         <Route path="/admin_dashboard" element={<ProtectedRoute allowedRoles={["admin"]}>
           <AdminDashboard />
         </ProtectedRoute>} />
+        <Route path="/assign_task" element={<AssignTask />} />
+        <Route path="/track_task" element={<TrackTask />} />
       </Routes>
     </BrowserRouter>
   );

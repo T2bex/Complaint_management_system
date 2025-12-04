@@ -1,9 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { Link } from "react-router-dom";
 import { FaHome, FaExclamationCircle, FaHourglassHalf } from 'react-icons/fa';
 
-
-const Sidebar = ({ sidebarOpen }) => {
+const HDASidebar = ({sidebarOpen}) => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   return (
     <div className={`fixed top-0 left-0 h-full w-64 bg-purple-800 px-4 py-2 transition-transform duration-300
@@ -13,24 +12,24 @@ const Sidebar = ({ sidebarOpen }) => {
         {user.firstname ? (
           <h1 className='text-2xl text-white text-center font-semibold'>{user.firstname}</h1>
         ) : (
-          <h1 className='text-2xl text-white text-center font-semibold'>User Dashboard</h1>
+          <h1 className='text-2xl text-white text-center font-semibold'>Helpdesk</h1>
         )}
       </div>
       <hr />
       <ul className='mt-3 text-white font-bold'>
         <li className='mb-2 rounded hover:shadow hover:bg-purple-500 py-2'>
-          <Link to="/userdashboard" className='px-3 flex items-center'>
+          <Link to="/help_desk_dashboard" className='px-3 flex items-center'>
             <FaHome className='w-6 h-6 mr-2' /> Home
           </Link>
         </li>
         <li className='mb-2 rounded hover:shadow hover:bg-purple-500 py-2'>
-          <Link to="/user_complaint" className='px-3 flex items-center'>
-            <FaExclamationCircle className='w-6 h-6 mr-2' /> Register Problem
+          <Link to="/assign_task" className='px-3 flex items-center'>
+            <FaExclamationCircle className='w-6 h-6 mr-2' /> Assign Task
           </Link>
         </li>
         <li className='mb-2 rounded hover:shadow hover:bg-purple-500 py-2'>
-          <Link to="/problem_tracking" className='px-3 flex items-center'>
-            <FaHourglassHalf className='w-6 h-6 mr-2' /> Track Problem
+          <Link to="/track_task" className='px-3 flex items-center'>
+            <FaHourglassHalf className='w-6 h-6 mr-2' /> Track Task
           </Link>
         </li>
       </ul>
@@ -38,4 +37,4 @@ const Sidebar = ({ sidebarOpen }) => {
   )
 }
 
-export default Sidebar;
+export default HDASidebar

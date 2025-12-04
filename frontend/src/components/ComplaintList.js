@@ -2,6 +2,11 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 
 function ComplaintList() {
+    function getStatusColor(status) {
+    if (status === "Open") return "text-red-600 font-semibold";
+    if (status === "Resolved") return "text-green-600 font-semibold";
+    return "text-gray-600";
+  }
     const [complaints, setComplaints] = useState([]);
 
     useEffect(() => {
@@ -29,7 +34,9 @@ function ComplaintList() {
             <h3 className="text-center font-semibold text-sm mb-4">{complaint.description}</h3>
             <div className='flex md:space-x-3 text-xs font-light justify-center'>
                 <p>Date: {new Date(complaint.createdAt).toLocaleDateString()}</p>
-                <p>Status: {complaint.status}</p>
+                <p className={`ml-2 ${getStatusColor(complaint.status)}`}>
+              {complaint.status}
+            </p>
             </div>
         </div>
         ))}

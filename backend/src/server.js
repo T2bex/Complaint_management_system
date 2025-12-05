@@ -62,13 +62,17 @@ router.post('/complaint/', async(req, res) => {
   }
 })
 //calls complaint for helpdesk by organisation they are working for
+
 router.get('/complaints/organisation/:orgId', async (req, res) => {
   try {
     const { orgId } = req.params;
 
-    const complaints = await Complaint.find({
-      organisations_id: orgId,
-    }).populate("consumer_id");
+    const complaints = await Complaint.find({ organisations_id: orgId })
+      .populate("consumer_id")       // get consumer details
+      .populate("organisations_id"); // get organisation details
+
+    if (!complaints.length)
+      return res.status(404).json({ message: "No complaints found for this organisation" });
 
     res.json({ complaints });
 
@@ -77,6 +81,7 @@ router.get('/complaints/organisation/:orgId', async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 
 //calls complaints for logged in consumer

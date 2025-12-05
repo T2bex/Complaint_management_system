@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ComplaintList from "./ComplaintList";
+import DeskComplaints from "./DeskComplaints";
 
 function DeskDashboard() {
   const [complaints, setComplaints] = useState([]);
@@ -50,7 +50,7 @@ function DeskDashboard() {
       </div>
 
       <h2 className="font-semibold mb-3">Complaint List</h2>
-      <ComplaintList complaints={complaints} />
+      <DeskComplaints complaints={complaints} />
     </div>
   );
 }

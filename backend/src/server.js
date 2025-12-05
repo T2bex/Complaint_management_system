@@ -103,6 +103,46 @@ router.get('/complaints/user/:id', async (req, res) => {
   }
 })
 
+//get support_person
+router.get("/users/support/:orgId", async (req, res) => {
+  try {
+    const orgObjectId = new mongoose.Types.ObjectId(req.params.orgId);
+
+    const users = await UserModel.find({
+      organisations_id: orgObjectId,
+      role: "support_person",
+    });
+
+    if (!users.length) {
+      return res.status(404).json({ message: "No support persons found" });
+    }
+
+    res.json({ users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+//assign complaints
+router.put("/complaints/assign/:id", async (req, res) => {
+  try {
+    const { assigned_to, priority, status } = req.body;
+
+    await Complaint.findByIdAndUpdate(req.params.id, {
+      assigned_to,
+      priority,
+      status,
+    });
+
+    res.json({ message: "Complaint Assigned Successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+
+
 
 app.listen(8000, () => {
     console.log("Server is running on port 8000")

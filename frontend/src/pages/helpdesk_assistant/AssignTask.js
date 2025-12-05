@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import Navbar from '../../components/Navbar';
+import {  useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
+import HDASidebar from '../../components/HDASidebar';
+import DeskDashboard from '../../components/DeskDashboard';
+import HDAssign from '../../components/HDAssign';
 
-function AssignTask() {
-  return (
-    <div>AssignTask</div>
-  )
+export default function AssignTask() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) navigate("/login", { replace: true });
+  
+    
+  }, []);
+  
+    const toggleSidebar = () => {
+      setSidebarOpen(!sidebarOpen);
+    }
+  
+    return (
+      <div className="flex h-screen">
+        
+        <HDASidebar sidebarOpen={sidebarOpen} />
+  
+        
+        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
+          <Navbar toggleSidebar={toggleSidebar} />
+          <main className='flex-1 overflow-auto'>
+            <HDAssign/>
+          </main>
+          <Footer/>
+        </div>
+      </div>
+    )
 }
-
-export default AssignTask

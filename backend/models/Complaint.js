@@ -14,9 +14,15 @@ const complaintSchema = new mongoose.Schema({
     ref: "organisations",
     required: true,
   },
-
-  status: { type: String, enum: ["Open", "In Progress", "Resolved"], default: "Open" },
-  createdAt: { type: Date, default: Date.now },
+  assigned_to: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users" },
+  priority: { 
+    type: String, 
+    enum: ["Low", "Medium", "High"] },
+    status: { type: String, enum: ["Open", "In Progress", "Resolved"], default: "Open" },
+  createdAt: { type: Date, 
+    default: Date.now },
 });
 
 const Complaint = mongoose.model("complaints", complaintSchema);

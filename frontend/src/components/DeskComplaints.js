@@ -4,6 +4,7 @@ import axios from 'axios';
 function DeskComplaints() {
     function getStatusColor(status) {
     if (status === "Open") return "text-red-600 font-semibold";
+    if (status === "In Progress") return "text-yellow-600 font-semibold";
     if (status === "Resolved") return "text-green-600 font-semibold";
     return "text-gray-600";
   }
